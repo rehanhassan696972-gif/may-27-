@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation ✈️</title>
+    <style>
+        /* 1. SHARED BACKGROUND */
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+                linear-gradient(135deg, #fef7d8 0%, #faeef8 100%),
+                repeating-linear-gradient(0deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(90deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* POPUP ANIMATION EFFECT */
+        @keyframes elasticPop {
+            0% { transform: scale(0.6); opacity: 0; }
+            60% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .container { 
+            text-align: center; 
+            width: 90%; 
+            max-width: 380px; 
+            z-index: 10; 
+            /* Applying the popup effect to the whole container on load */
+            animation: elasticPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* THE BOARDING PASS */
+        .ticket-card {
+            background: white; color: #222; border-radius: 20px;
+            padding: 25px; cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-left: 12px solid #003580;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .ticket-card:active { transform: scale(0.96); }
+
+        .pass-header { display: flex; justify-content: space-between; font-weight: 800; border-bottom: 2px solid #eee; padding-bottom: 10px; font-size: 0.8rem; }
+        .flight-info { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; }
+        .city { font-size: 1.5rem; font-weight: 900; }
+
+        /* LOADING OVERLAY */
+        #loadingOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95); z-index: 1000;
+            flex-direction: column; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .loader { width: 70%; height: 8px; background: #eee; border-radius: 10px; overflow: hidden; margin: 20px 0; }
+        .progress { width: 0%; height: 100%; background: #d159a6; transition: width 0.1s linear; }
+
+        /* THE SIKE CARD */
+        #prankBox {
+            display: none;
+            background-color: #fefdf3;
+            padding: 25px 20px;
+            border-radius: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            /* This will pop up when revealed */
+            animation: elasticPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .v-img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .broke-text { color: #d159a6; font-weight: 800; font-size: 1.2rem; margin: 5px 0; }
+        .meme-img { width: 100px; border-radius: 15px; margin: 10px 0; }
+
+        /* THE BUTTON */
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 35px;
+            background-color: #d159a6;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #ff3399;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(209, 89, 166, 0.4);
+        }
+
+        @media (max-width: 480px) {
+            .container { max-width: 320px; }
+            #prankBox { padding: 20px 15px; }
+            .v-img { max-height: 150px; }
+            .city { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="ticketScreen">
+        <p style="color: #d159a6; font-weight: bold; font-size: 0.9rem;">● RESERVATION HELD</p>
+        <h2 style="color: #333; margin-bottom: 25px; font-size: 1.3rem;">Check your E-Ticket to Korea 🇰🇷</h2>
+        
+        <div class="ticket-card" onclick="startPrank()">
+            <div class="pass-header">
+                <span>BOARDING PASS</span>
+                <span>MAY 2026</span>
+            </div>
+            <div class="flight-info">
+                <div class="city">PAK</div>
+                <div style="font-size: 1.5rem;">✈️</div>
+                <div class="city">SEOUL</div>
+            </div>
+            <div style="text-align: left; font-size: 0.75rem; border-top: 1px dashed #ccc; padding-top: 15px; color: #666;">
+                <strong>PASSENGER:</strong> BIRTHDAY QUEEN<br>
+                <strong>GATE:</strong> B-DAY | <strong>SEAT:</strong> 17A
+            </div>
+            <p style="margin-top: 20px; color: #003580; font-weight: bold; font-size: 0.8rem;">TAP TO CONFIRM PAYMENT</p>
+        </div>
+    </div>
+
+    <div id="loadingOverlay">
+        <h3 id="statusText" style="color: #333;">Connecting to Rehan Bank😎...</h3>
+        <div class="loader"><div class="progress" id="progressBar"></div></div>
+        <p id="balanceText" style="font-family: monospace; color: #999; font-size: 0.8rem;">Checking Balance...</p>
+    </div>
+
+    <div class="container" id="prankBox">
+        <img src="tae 1.jpeg" class="v-img" alt="Taehyung Laughing">
+        
+        <h1 style="font-size: 1.8rem; color: #333; margin: 15px 0 5px 0;">SIKE! 😂</h1>
+        <p class="broke-text">INSUFFICIENT FUNDS</p>
+        
+        <img src="https://media.tenor.com/On7tT9En_e4AAAAM/cat-meme-funny-cat.gif" class="meme-img">
+        
+        <p style="color: #8a6375; font-size: 0.85rem; line-height: 1.4; margin: 10px 0;">
+            Korea?! In this economy? 😭 My bank account saw the price and started crying.
+            Not funny I know... but mujhe toh maza aya! 😂
+        </p>
+        
+        <p style="font-size: 0.75rem; color: #b07c91; border-top: 1px solid #eee; padding-top: 10px; margin-bottom: 10px;">
+            But hey, I coded this site for you! That's gotta be worth a treat from you, right? Happy Birthday! 🎂
+        </p>
+
+        <button class="back-btn" onclick="window.location.href='apology 7.html'"> 😒❤️</button>
+    </div>
+
+    <script>
+        function startPrank() {
+            // Hide the initial ticket smoothly
+            document.getElementById('ticketScreen').style.display = 'none';
+            
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.display = 'flex';
+            
+            let prog = 0;
+            const bar = document.getElementById('progressBar');
+            const status = document.getElementById('statusText');
+            const balance = document.getElementById('balanceText');
+
+            const interval = setInterval(() => {
+                prog += 1;
+                bar.style.width = prog + "%";
+                
+                if(prog === 25) { 
+                    status.innerText = "Processing Trip to Seoul..."; 
+                    balance.innerText = "Current Balance: Rs. 1,250,000"; 
+                }
+                if(prog === 60) { 
+                    status.innerText = "Authorizing Transaction..."; 
+                    balance.innerText = "Balance Dropping: Rs. 450..."; 
+                }
+                if(prog === 85) { 
+                    status.innerText = "Finalizing... Wait..."; 
+                    balance.innerText = "Error: Wallet not found!"; 
+                }
+                
+                if(prog >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        // Show the prank box which has the elasticPop animation
+                        document.getElementById('prankBox').style.display = 'block';
+                    }, 600);
+                }
+            }, 40); 
+        }
+    </script>
+</body>
+</html>

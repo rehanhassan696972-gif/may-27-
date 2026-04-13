@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Vibes Playlist 🎵</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fef7d8 0%, #faeef8 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        /* POPUP ANIMATION */
+        @keyframes elasticPop {
+            0% { transform: scale(0.6); opacity: 0; }
+            60% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .container {
+            width: 90%; max-width: 400px; text-align: center;
+            animation: elasticPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .playlist-card {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .swiper { width: 100%; padding-bottom: 20px; }
+
+        .swiper-slide {
+            opacity: 0.4;
+            transition: transform 0.3s, opacity 0.3s;
+            transform: scale(0.85);
+        }
+
+        .swiper-slide-active { opacity: 1; transform: scale(1); }
+
+        .song-img {
+            width: 100%; aspect-ratio: 1/1;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .song-title { color: #333; font-weight: 800; font-size: 1.2rem; margin: 15px 0 5px 0; }
+        .song-desc { color: #8a6375; font-size: 0.85rem; padding: 0 10px; line-height: 1.4; }
+
+        /* BOLD NAVIGATION */
+        .swiper-button-next, .swiper-button-prev {
+            background-color: white;
+            width: 45px !important; height: 45px !important;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            color: #f241a0 !important;
+        }
+
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 18px !important; font-weight: 900 !important;
+        }
+
+        /* BUTTON WITH HOVER EFFECT */
+        .pink-btn {
+            background-color: #f241a0;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(242, 65, 160, 0.3);
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 80%;
+        }
+
+        .pink-btn:hover {
+            background-color: #ff3399;
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(242, 65, 160, 0.5);
+        }
+
+        .pink-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div style="color: #d159a6; font-weight: bold; margin-bottom: 5px;">Birthday Vibes Playlist 🎵</div>
+        <div style="color: #8a6375; font-size: 0.8rem; margin-bottom: 20px;">Every slide has its own song... (i chose them cuz you were not telling me ure fav)</div>
+
+        <div class="playlist-card">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="spider1.jpg" class="song-img">
+                        <div class="song-title">Koi Esa Geet Gau 🎵</div>
+                        <div class="song-desc">Because you make my heart skip a beat every single day! ✨</div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="spider2.jpeg" class="song-img">
+                        <div class="song-title">Wada ye Lelo 🎵</div>
+                        <div class="song-desc">A special song for the one who deserves the world. 👑</div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="spider3.jpg" class="song-img">
+                        <div class="song-title">Perfect 🎵</div>
+                        <div class="song-desc">I'd still want to be right here celebrating you. 💖</div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="spider4.jpg" class="song-img">
+                        <div class="song-title">If the World was Ending 🎵</div>
+                        <div class="song-desc">The perfect rhythm for the perfect Birthday Queen! 🎂</div>
+                    </div>
+                </div>
+                
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+        <button class="pink-btn" onclick="window.location.href='tae 9.html'">
+            Continue to Surprise ✨
+        </button>
+    </div>
+
+    <audio id="song1" src="geet gau.mp3" loop></audio>
+    <audio id="song2" src="chahat.mp3" loop></audio>
+    <audio id="song3" src="angell.mp3" loop></audio>
+    <audio id="song4" src="ending.mp3" loop></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+    const songs = [
+        document.getElementById('song1'),
+        document.getElementById('song2'),
+        document.getElementById('song3'),
+        document.getElementById('song4')
+    ];
+
+    function stopAll() {
+        songs.forEach(s => { 
+            s.pause(); 
+            s.currentTime = 0; 
+        });
+    }
+
+    const swiper = new Swiper('.swiper', {
+        effect: 'coverflow',
+        centeredSlides: true,
+        slidesPerView: 1.2,
+        coverflowEffect: { rotate: 0, stretch: 0, depth: 100, modifier: 2, slideShadows: false },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        on: {
+            slideChange: function () {
+                stopAll();
+                // Since 'loop' is in the HTML, we just need to call play()
+                let playPromise = songs[this.activeIndex].play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => { /* Silent catch for autoplay blocks */ });
+                }
+            }
+        }
+    });
+
+    // FORCE START ON LOAD
+    window.addEventListener('load', () => {
+        let startPlay = songs[0].play();
+        
+        if (startPlay !== undefined) {
+            startPlay.catch(() => {
+                // If blocked, play on first touch/swipe/click
+                document.body.addEventListener('click', () => {
+                    songs[swiper.activeIndex].play();
+                }, { once: true });
+            });
+        }
+    });
+</script>
+</body>
+</html>

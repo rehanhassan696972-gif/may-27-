@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Know... 😉</title>
+    <style>
+        /* 1. SHARED BACKGROUND */
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+                linear-gradient(135deg, #fef7d8 0%, #faeef8 100%),
+                repeating-linear-gradient(0deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(90deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        /* 2. ENTRANCE ANIMATION */
+        @keyframes revealPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .container { text-align: center; width: 90%; max-width: 400px; z-index: 10; }
+
+        .reveal-card {
+            background-color: #fefdf3;
+            padding: 40px 25px;
+            border-radius: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            animation: revealPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* 3. TEXT STYLING */
+        h1 { 
+            color: #d159a6; 
+            font-size: 1.8rem; 
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sub-text {
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .fulfilled-tag {
+            display: inline-block;
+            background: #fff0f9;
+            color: #f241a0;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            border: 1px solid #f241a0;
+        }
+
+        /* 4. BUTTON STYLING */
+        .show-wish-btn {
+            background-color: #f241a0;
+            color: white;
+            padding: 16px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(242, 65, 160, 0.3);
+            display: inline-block;
+            transition: all 0.3s ease;
+            width: 80%;
+        }
+
+        .show-wish-btn:hover {
+            transform: translateY(-3px);
+            background-color: #ff3399;
+            box-shadow: 0 15px 25px rgba(242, 65, 160, 0.4);
+        }
+
+        /* Float animation for the emoji */
+        .floating-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="reveal-card">
+            <div class="floating-emoji">🔮</div>
+            
+            <h1>I KNOW WHAT HAVE U WISHED FOR 😒</h1>
+            
+            <div class="fulfilled-tag">Status: Processed ✅</div>
+
+            <p class="sub-text">
+                Your wish has been fulfilled.
+            </p>
+
+            <button class="show-wish-btn"onclick="revealWish()">
+                Show My Fulfilled Wish ✨
+                
+            </button>
+            
+        </div>
+        
+    </div>
+    
+<script>
+        function revealWish() {
+            const btn = document.querySelector('.show-wish-btn');
+            btn.innerText = "Retrieving Wish... 🪄";
+            btn.style.opacity = "0.7";
+            btn.style.pointerEvents = "none";
+
+            setTimeout(() => {
+                // Change 'your-page-name.html' to the actual file name you want to open!
+                window.location.href = 'tickets 6.html'; 
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
+<audio id="backgroundMusic" loop>
+    <source src="bg.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    window.addEventListener('load', function() {
+        const audio = document.getElementById('backgroundMusic');
+        
+        // 1. Try to play immediately on load
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // 2. If browser blocks autoplay, wait for the first touch/click
+                console.log("Autoplay blocked. Waiting for user interaction...");
+                
+                const startOnInteraction = () => {
+                    audio.play();
+                    // Remove listeners after first successful play
+                    document.removeEventListener('click', startOnInteraction);
+                    document.removeEventListener('touchstart', startOnInteraction);
+                };
+
+                document.addEventListener('click', startOnInteraction);
+                document.addEventListener('touchstart', startOnInteraction);
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Birthday Love Letter 💌</title>
+    <style>
+        @media (max-width: 480px) {
+    .card-container {
+        width: 85%;
+        padding: 25px 15px;
+    }
+    .header-section h1 { font-size: 1.2rem; }
+    .envelope-wrapper { max-width: 260px; }
+    .envelope-flap::after {
+        border-left: 130px solid transparent; /* Half of 260px */
+        border-right: 130px solid transparent;
+        border-top: 85px solid #f9acc4;
+    }
+}
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Background: Grid pattern with soft gradient */
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+                linear-gradient(135deg, #fef7d8 0%, #faeef8 100%),
+                repeating-linear-gradient(0deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(90deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        /* --- THE DAMPING POP ANIMATION --- */
+        /* This creates a bouncy, elastic entry that settles slowly */
+        @keyframes elasticPop {
+            0% { transform: scale(0); opacity: 0; }
+            40% { transform: scale(1.15); opacity: 1; } /* Over-scale */
+            60% { transform: scale(0.95); }             /* Slight bounce back */
+            80% { transform: scale(1.02); }             /* Tiny settle */
+            100% { transform: scale(1); opacity: 1; }   /* Final position */
+        }
+
+        /* --- THE SEA-SAW WOBBLE --- */
+        @keyframes seasaw {
+            0%, 100% { transform: rotate(-1.5deg); }
+            50% { transform: rotate(1.5deg); }
+        }
+
+        .card-container {
+            position: relative;
+            width: 90%;
+            max-width: 380px;
+            background-color: #fefdf3; /* Matches the image yellow tint */
+            padding: 35px 20px;
+            border-radius: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            text-align: center;
+            /* 1.2s duration gives it that 'heavy' high-quality damping feel */
+            animation: elasticPop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            visibility: hidden; /* Initial state */
+        }
+
+        /* Decorative Background Emojis */
+        .decor { position: absolute; pointer-events: none; }
+        .star { top: -15px; left: -5px; font-size: 2.2rem; color: #fdf2a6; }
+        .cloud-1 { top: 5px; right: -5px; font-size: 2rem; }
+        .cloud-2 { top: 45px; right: 10px; font-size: 1.6rem; opacity: 0.5; }
+
+        /* Header Text */
+        .header-section h1 {
+            color: #d159a6;
+            font-size: 1.5rem;
+            margin: 0 0 8px 0;
+            font-weight: 800;
+        }
+        .header-section p {
+            color: #b07c91;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* --- THE ENVELOPE --- */
+        .envelope-wrapper {
+            margin: 40px auto;
+            width: 100%;
+            max-width: 310px;
+            aspect-ratio: 1.6 / 1;
+            position: relative;
+            background: #fee0ec; /* Light pink base */
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            /* Wobble starts after the card settles */
+            animation: seasaw 3s ease-in-out infinite;
+            animation-delay: 1.2s; 
+            transform-origin: center;
+        }
+
+        /* THE DARK PINK HEAD (Triangle Flap) */
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .envelope-flap::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 155px solid transparent; /* Half of envelope width */
+            border-right: 155px solid transparent;
+            border-top: 105px solid #f9acc4; /* The Dark Pink Part from image */
+            border-radius: 15px 15px 0 0;
+        }
+
+        /* The Heart Seal */
+        .seal {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px; height: 50px;
+            background-color: #ff3399; /* Hot pink circle */
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: white; font-size: 1.4rem;
+            box-shadow: 0 4px 12px rgba(255, 51, 153, 0.4);
+            z-index: 3;
+        }
+
+        /* Floating Corner Hearts */
+        .mini-heart { position: absolute; font-size: 0.9rem; z-index: 4; }
+        .h-tr { top: 10px; right: 15px; }
+        .h-bl { bottom: 10px; left: 15px; }
+
+        /* Footer */
+        .footer-section p {
+            color: #8a6375;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Special Delivery Button */
+        .delivery-btn {
+            display: inline-block;
+            background: #fff;
+            color: #d159a6;
+            border: 2px solid #f9ccde;
+            border-radius: 35px;
+            padding: 12px 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .delivery-btn:hover {
+            background-color: #ff3399;
+            color: white;
+            border-color: #ff3399;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 51, 153, 0.2);
+        }
+        body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Consistent Grid Background */
+    background: 
+        linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+        linear-gradient(135deg, #fef7d8 0%, #faeef8 100%),
+        repeating-linear-gradient(0deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px),
+        repeating-linear-gradient(90deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden; /* Prevents horizontal scrolling on phone */
+}
+    </style>
+</head>
+<body onload="init()">
+
+    <div class="card-container" id="mainCard">
+        <span class="decor star">⭐</span>
+        <span class="decor cloud-1">☁️</span>
+        <span class="decor cloud-2">☁️</span>
+
+        <div class="header-section">
+            <h1>A Birthday Love Letter 💌</h1>
+            <p>From my heart to the birthday queen</p>
+        </div>
+
+        <div class="envelope-wrapper" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="seal">❤️</div>
+            <span class="mini-heart h-tr">💖💖</span>
+            <span class="mini-heart h-bl">💖</span>
+        </div>
+
+        <div class="footer-section">
+            <p>Click to open your birthday surprise</p>
+            <div class="delivery-btn" id="btnAction">
+                Birthday Special Delivery 🎂
+            </div>
+        </div>
+    </div>
+    <script>
+    function init() {
+        // This makes the card visible after a tiny delay
+        setTimeout(() => {
+            document.getElementById('mainCard').style.visibility = 'visible';
+        }, 150);
+
+        const openAction = () => {
+            // Visual feedback: Envelope 'opens' and card zooms in
+            document.getElementById('mainCard').style.transform = 'scale(1.5)';
+            document.getElementById('mainCard').style.opacity = '0';
+            document.getElementById('mainCard').style.transition = 'all 0.5s ease-in';
+            
+            // Go to the letter  page after the animation
+            setTimeout(() => {
+                window.location.href = 'letter 2.html'; 
+            }, 500);
+        };
+
+        // LINK BOTH HERE:
+        // 1. Link the envelope
+        document.getElementById('envelope').addEventListener('click', openAction);
+        
+        // 2. Link the button (Make sure your button has id="btnAction")
+        document.getElementById('btnAction').addEventListener('click', openAction);
+    }
+    
+    // Run the init function when the window loads
+    window.onload = init;
+</script>
+</body>
+</html>

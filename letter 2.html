@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Beautiful! ✨</title>
+    <div class="stars-container">
+    <div class="star-fall">⭐</div>
+    <div class="star-fall">✨</div>
+    <div class="star-fall">⭐</div>
+    <div class="star-fall">✨</div>
+    <div class="star-fall">⭐</div>
+    <div class="star-fall">✨</div>
+</div>
+    <style>
+        @media (max-width: 480px) {
+    .letter-card {
+        width: 90%;
+        max-height: 85vh; /* Prevents it from being longer than the screen */
+        overflow-y: auto;
+    }
+    .kitty-bottom {
+        width: 80px; /* Smaller cat for phone screen */
+        bottom: 50px; 
+    }
+    .kitty-top {
+        width: 70px;
+    }
+}
+        
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+                linear-gradient(135deg, #fef7d8 0%, #faeef8 100%),
+                repeating-linear-gradient(0deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(90deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+        
+
+        /* The Main Letter Card Sliding Up */
+        .letter-card {
+            position: relative;
+            width: 90%;
+            max-width: 380px;
+            background: #fffafa; 
+            padding: 35px 20px;
+            border-radius: 35px;
+            box-shadow: 0 15px 45px rgba(255, 182, 193, 0.3);
+            text-align: center;
+            border: 1px solid #fee0ec;
+            animation: slideUpLetter 0.8s ease-out forwards;
+        }
+
+        @keyframes slideUpLetter {
+            0% { transform: translateY(100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* --- THE KITTY POP-UP ANIMATION --- */
+        @keyframes kittyPop {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(15deg); }
+            100% { transform: scale(1) rotate(10deg); opacity: 1; }
+        }
+
+        /* Hello Kitty (kitty 1.png) - Top Right Corner */
+        .kitty-top {
+            position: absolute;
+            top: -45px;
+            right: -15px;
+            width: 95px;
+            z-index: 10;
+            opacity: 0;
+            /* Pops in after the letter slides up */
+            animation: kittyPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards;
+        }
+
+        /* Meme Cat (kitty 2.png) - Bottom Left Corner */
+      /* Meme Cat (kitty 2.png) - Adjusted closer to the button */
+.kitty-bottom {
+    position: absolute;
+    bottom: 70px; /* <--- CHANGE THIS NUMBER */
+    left: 5px;    
+    width: 110px;
+    z-index: 10;
+    opacity: 0;
+    animation: kittyPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.1s forwards;
+}
+
+        /* --- CONTENT STYLES --- */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f9ebf2;
+            margin-bottom: 20px;
+        }
+        .dots { display: flex; gap: 5px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .window-txt { font-size: 0.8rem; color: #b07c91; margin-left: 15px; }
+
+        h1 {
+            color: #ff3399;
+            font-size: 2rem;
+            margin: 15px 0;
+            font-weight: 800;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+        }
+        .highlight {
+            color: #ff3399;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        .let-go-btn {
+            background: #ff3399;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 51, 153, 0.3);
+            transition: transform 0.2s;
+        }
+        .let-go-btn:hover { transform: scale(1.05); background: #e62e8a; }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #b07c91;
+        }
+        /* --- FALLING STARS ANIMATION --- */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* So she can still click the buttons */
+    z-index: 0; /* Behind the card */
+}
+
+.star-fall {
+    position: absolute;
+    top: -50px;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* Randomize the stars' positions and speeds */
+.star-fall:nth-child(1) { left: 10%; animation-duration: 6s; animation-delay: 0s; }
+.star-fall:nth-child(2) { left: 30%; animation-duration: 8s; animation-delay: 2s; }
+.star-fall:nth-child(3) { left: 50%; animation-duration: 5s; animation-delay: 1s; }
+.star-fall:nth-child(4) { left: 70%; animation-duration: 9s; animation-delay: 3s; }
+.star-fall:nth-child(5) { left: 85%; animation-duration: 7s; animation-delay: 0.5s; }
+.star-fall:nth-child(6) { left: 95%; animation-duration: 10s; animation-delay: 4s; }
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Consistent Grid Background */
+    background: 
+        linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+        linear-gradient(135deg, #fef7d8 0%, #faeef8 100%),
+        repeating-linear-gradient(0deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px),
+        repeating-linear-gradient(90deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden; /* Prevents horizontal scrolling on phone */
+}
+    </style>
+</head>
+<body>
+
+    <div class="letter-card">
+        <div class="top-bar">
+            <div class="dots">
+                <div class="dot" style="background: #ff5f56;"></div>
+                <div class="dot" style="background: #ffbd2e;"></div>
+                <div class="dot" style="background: #27c93f;"></div>
+            </div>
+            <span class="window-txt">Happy Birthday!</span>
+        </div>
+
+        <img src="kitty 1.png" class="kitty-top" alt="Hello Kitty">
+        <img src="kitty 2.png" class="kitty-bottom" alt="Meme Cat">
+
+        <h1>Happy Birthday, Beautiful! 🎂✨</h1>
+
+        <p>Today is all about celebrating the most amazing person in my world. I've created something magical just for you on your special day...</p>
+
+        <span class="highlight">Ready for your birthday surprise? 💘</span>
+
+        <button class="let-go-btn" onclick="window.location.href='cake 3.html'">Let's Gooo</button>
+
+        <div class="footer">
+            Made with endless love for your special day 💕
+        </div>
+    </div>
+    <audio id="backgroundMusic" loop>
+    <source src="bg.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    window.addEventListener('load', function() {
+        const audio = document.getElementById('backgroundMusic');
+        
+        // 1. Try to play immediately on load
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // 2. If browser blocks autoplay, wait for the first touch/click
+                console.log("Autoplay blocked. Waiting for user interaction...");
+                
+                const startOnInteraction = () => {
+                    audio.play();
+                    // Remove listeners after first successful play
+                    document.removeEventListener('click', startOnInteraction);
+                    document.removeEventListener('touchstart', startOnInteraction);
+                };
+
+                document.addEventListener('click', startOnInteraction);
+                document.addEventListener('touchstart', startOnInteraction);
+            });
+        }
+    });
+</script>
+    
+
+</body>
+
+</html>

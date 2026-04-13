@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Wish! ✨</title>
+    <style>
+        /* 1. SHARED BACKGROUND */
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+                linear-gradient(135deg, #fef7d8 0%, #faeef8 100%),
+                repeating-linear-gradient(0deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(90deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes elasticPop {
+            0% { transform: scale(0); opacity: 0; }
+            40% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .container { text-align: center; width: 90%; max-width: 380px; z-index: 10; }
+
+        .wish-card {
+            background-color: #fefdf3;
+            padding: 30px 20px;
+            border-radius: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            animation: elasticPop 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .image-box {
+            width: 90%;
+            margin: 0 auto 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            background: #fff;
+            border: 8px solid rgba(209, 89, 166, 0.1);
+        }
+
+        .image-box img { width: 100%; display: block; transition: opacity 0.5s ease; }
+
+        h1 { color: #d159a6; font-size: 1.6rem; margin-bottom: 20px; }
+        .wish-title { color: #ff4da6; font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; }
+        .instruction { color: #333; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; line-height: 1.4; }
+        .sub-text { color: #8a6375; font-size: 0.85rem; margin-bottom: 25px; }
+
+        /* PINK BUTTON */
+        .pink-btn {
+            background-color: #f241a0;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(242, 65, 160, 0.3);
+            display: inline-block;
+            transition: all 0.3s ease;
+            min-width: 220px;
+        }
+
+        .pink-btn.continue-state {
+            background-color: #27c93f; /* Changes to green or keep pink if you prefer */
+            box-shadow: 0 10px 20px rgba(39, 201, 63, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 style="color: #d159a6;">Make a Wish! 🎂</h1>
+        
+        <div class="wish-card">
+            <div class="image-box">
+                <img src="wish-before.jpeg" id="wishImg" alt="Birthday Wish">
+            </div>
+
+            <p id="cakeEmoji" style="font-size: 1.5rem; margin-bottom: 5px;">🎂</p>
+            <div class="wish-title" id="wishTitle">Time to Make a Wish! ✨</div>
+
+            <div class="instruction" id="mainInstruction">
+                Close your eyes and make your birthday wish! 🌟
+            </div>
+
+            <div class="sub-text" id="subText">
+                Think of something wonderful for your new year!
+            </div>
+
+            <button class="pink-btn" id="wishBtn" onclick="processWish()">
+                I've Made My Wish! 💫
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        let isWishMade = false;
+
+        function processWish() {
+            const btn = document.getElementById('wishBtn');
+            const img = document.getElementById('wishImg');
+            const title = document.getElementById('wishTitle');
+            const instruction = document.getElementById('mainInstruction');
+            
+            if (!isWishMade) {
+                // 1. Swap Image to After
+                img.style.opacity = '0';
+                setTimeout(() => {
+                    img.src = 'wish-after.jpeg';
+                    img.style.opacity = '1';
+                }, 500);
+
+                // 2. Celebration Effect
+                confetti({
+                    particleCount: 200,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+
+                // 3. Change Text Immediately to show it's working
+                btn.innerText = "Wishing... ✨";
+                btn.style.pointerEvents = "none"; // Prevent double clicks
+                
+                // 4. Wait 3 seconds
+                setTimeout(() => {
+                    isWishMade = true;
+                    btn.innerText = "Continue →";
+                    btn.classList.add('continue-state');
+                    btn.style.pointerEvents = "auto";
+                    
+                    title.innerText = "Wish Sent to the Stars! 🌠";
+                    instruction.innerText = "I hope all your dreams come true.";
+                }, 3000);
+
+            } else {
+                // 5. Redirect to final page
+                window.location.href = 'fulfilled 5.html';
+            }
+        }
+    </script>
+    <audio id="backgroundMusic" loop>
+    <source src="bg.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    window.addEventListener('load', function() {
+        const audio = document.getElementById('backgroundMusic');
+        
+        // 1. Try to play immediately on load
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // 2. If browser blocks autoplay, wait for the first touch/click
+                console.log("Autoplay blocked. Waiting for user interaction...");
+                
+                const startOnInteraction = () => {
+                    audio.play();
+                    // Remove listeners after first successful play
+                    document.removeEventListener('click', startOnInteraction);
+                    document.removeEventListener('touchstart', startOnInteraction);
+                };
+
+                document.addEventListener('click', startOnInteraction);
+                document.addEventListener('touchstart', startOnInteraction);
+            });
+        }
+    });
+</script>
+</body>
+</html>

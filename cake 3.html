@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>It's Cake Time! 🎂</title>
+    <style>
+        /* 1. SHARED BACKGROUND */
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+                linear-gradient(135deg, #fef7d8 0%, #faeef8 100%),
+                repeating-linear-gradient(0deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(90deg, rgba(162, 162, 162, 0.05) 0px, rgba(162, 162, 162, 0.05) 1px, transparent 1px, transparent 20px);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        /* 2. BOUNCY CARD ANIMATION */
+        @keyframes elasticPop {
+            0% { transform: scale(0); opacity: 0; }
+            40% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .container { text-align: center; width: 90%; max-width: 380px; z-index: 10; }
+
+        .cake-card {
+            background-color: #fefdf3;
+            padding: 30px 20px;
+            border-radius: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            animation: elasticPop 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            position: relative;
+        }
+
+        /* 3. THE CAKE LAYERS & OVERLAY */
+        .cake-box {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .cake-img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        #cakeCutLayer {
+            clip-path: inset(0 100% 0 0);
+            z-index: 2;
+        }
+
+        /* SUCCESS OVERLAY WITH BUTTON INSIDE */
+        #successOverlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 10;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* 4. THE KNIFE SLIDER */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            margin-top: 15px;
+            transition: opacity 0.5s ease;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            background: transparent;
+            position: relative;
+            z-index: 5;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 50px; width: 50px;
+            background: url('https://cdn-icons-png.flaticon.com/512/4523/4523023.png') center/contain no-repeat;
+            cursor: grab;
+            margin-top: -22px; 
+            border: none;
+            transform: rotate(-45deg); 
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            height: 50px; width: 50px;
+            background: url('https://cdn-icons-png.flaticon.com/512/4523/4523023.png') center/contain no-repeat;
+            cursor: grab;
+            border: none;
+            transform: rotate(-45deg);
+        }
+
+        .track {
+            width: 100%; height: 4px;
+            background: #eee; border-radius: 5px;
+            border: 1px dashed #d159a6;
+            position: absolute; top: 50%; transform: translateY(-50%);
+        }
+
+        /* 5. THE BUTTON INSIDE BLUR */
+        #nextBtn {
+            margin-top: 15px;
+            padding: 10px 25px;
+            background-color: #d159a6;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(209, 89, 166, 0.3);
+            font-size: 0.9rem;
+            opacity: 0; /* Starts hidden */
+            transform: translateY(10px);
+            transition: all 0.5s ease;
+        }
+
+        #nextBtn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MEDIA QUERY FOR MOBILE */
+        @media (max-width: 480px) {
+            .container { max-width: 320px; }
+            .cake-box { width: 220px; height: 220px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 style="color: #d159a6; margin-bottom: 5px;">It's Cake Time! 🎂</h1>
+        <p style="color: #8a6375; font-size: 0.9rem; margin-bottom: 15px;">Make your birthday wish come true!</p>
+
+        <div class="cake-card">
+            <h3 style="color: #333; font-size: 1.1rem; margin-bottom: 10px;">Cut your birthday cake, birthday girl! 🔪</h3>
+            
+            <div class="cake-box" id="cakeContainer">
+                <img src="cake-full.png" class="cake-img" id="cakeFull">
+                <img src="cake-cut.png" class="cake-img" id="cakeCutLayer">
+
+                <div id="successOverlay">
+                    <p style="font-size: 2.2rem; margin: 0;">🎉</p>
+                    <h2 style="color: #d159a6; font-size: 1.5rem; margin: 5px 0;">Perfect Cut! 🥳</h2>
+                    <p style="color: #8a6375; font-size: 0.8rem; padding: 0 15px; font-weight: 600; line-height: 1.4; margin-bottom: 10px;">
+                        May this year bring you everything your heart desires! ✨
+                    </p>
+                    
+                    <button id="nextBtn" onclick="window.location.href='wish 4.html'">
+    Continue ✨
+</button>
+                </div>
+            </div>
+
+            <div class="slider-wrapper" id="controlArea">
+                <div class="track"></div>
+                <input type="range" id="cutSlider" min="0" max="100" value="0">
+                <p style="color: #d159a6; font-size: 0.8rem; font-weight: bold; margin-top: 15px;">
+                    Drag the knife(ik its not like knife cuz i am not a prfessional coder) to cut! ✂️
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        const slider = document.getElementById('cutSlider');
+        const cutLayer = document.getElementById('cakeCutLayer');
+        const nextBtn = document.getElementById('nextBtn');
+        const controlArea = document.getElementById('controlArea');
+        const overlay = document.getElementById('successOverlay');
+
+        slider.addEventListener('input', function() {
+            let value = this.value;
+            let revealPercent = 100 - value;
+            cutLayer.style.clipPath = `inset(0 ${revealPercent}% 0 0)`;
+
+            if (value >= 98) {
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.7 }
+                });
+
+                // 1. Show the Blur Overlay
+                setTimeout(() => {
+                    overlay.style.display = 'flex';
+                    controlArea.style.opacity = '0';
+                }, 400);
+
+                // 2. Make the Button appear inside the blur
+                setTimeout(() => {
+                    nextBtn.classList.add('show');
+                    controlArea.style.display = 'none';
+                }, 1000);
+            }
+        });
+    </script>
+    <audio id="backgroundMusic" loop>
+    <source src="bg.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    window.addEventListener('load', function() {
+        const audio = document.getElementById('backgroundMusic');
+        
+        // 1. Try to play immediately on load
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // 2. If browser blocks autoplay, wait for the first touch/click
+                console.log("Autoplay blocked. Waiting for user interaction...");
+                
+                const startOnInteraction = () => {
+                    audio.play();
+                    // Remove listeners after first successful play
+                    document.removeEventListener('click', startOnInteraction);
+                    document.removeEventListener('touchstart', startOnInteraction);
+                };
+
+                document.addEventListener('click', startOnInteraction);
+                document.addEventListener('touchstart', startOnInteraction);
+            });
+        }
+    });
+</script>
+</body>
+</html>
